@@ -215,7 +215,7 @@ export default function LapseGame() {
         if (e.key === 'ArrowRight') handleSwipe('right');
       }}
     >
-      <header className="lapse-header safe-top">
+      <header className="lapse-header">
         <LapseBanner banner={activeBanner} />
         <LapseStatsBar
           stats={state.stats}

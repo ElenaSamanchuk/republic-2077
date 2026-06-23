@@ -1,5 +1,5 @@
 /**
- * PWA + Android launcher icons from game assets and brand colors.
+ * PWA + Android launcher icons — mini game screen with portrait.
  */
 import sharp from 'sharp';
 import fs from 'fs';
@@ -11,7 +11,8 @@ const root = path.join(__dirname, '..');
 
 const BRAND = { r: 45, g: 41, b: 38, alpha: 1 };
 const BRAND_HEX = '#2d2926';
-const GOLD = { r: 212, g: 180, b: 84 };
+const SCENE = { r: 158, g: 151, b: 142, alpha: 1 };
+const PORTRAIT = path.join(root, 'public/assets/characters/char-general.png');
 
 const STAT_FILES = [
   'assets/stats/stat-trust.png',
@@ -20,20 +21,40 @@ const STAT_FILES = [
   'assets/stats/stat-treasury.png',
 ];
 
-async function buildStatRow(size) {
-  const statH = Math.round(size * 0.24);
-  const statW = Math.round(size * 0.12);
-  const gap = Math.round(size * 0.035);
+async function buildIconComposites(size) {
+  const composites = [];
+  const barH = Math.round(size * 0.21);
+  const sceneTop = barH;
+
+  if (!fs.existsSync(PORTRAIT)) {
+    throw new Error(`Portrait asset missing: ${PORTRAIT}`);
+  }
+
+  const portrait = await sharp(PORTRAIT)
+    .resize(size, Math.round(size * 0.72), { fit: 'cover', position: 'top' })
+    .png()
+    .toBuffer();
+  composites.push({ input: portrait, top: sceneTop, left: 0 });
+
+  const barBg = Buffer.from(
+    `<svg width="${size}" height="${barH}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${size}" height="${barH}" fill="${BRAND_HEX}"/>
+    </svg>`,
+  );
+  composites.push({ input: barBg, top: 0, left: 0 });
+
+  const statH = Math.round(barH * 0.62);
+  const statW = Math.round(statH * 0.55);
+  const gap = Math.round(size * 0.055);
   const rowW = 4 * statW + 3 * gap;
   const startX = Math.round((size - rowW) / 2);
-  const statY = Math.round(size * 0.17);
-  const composites = [];
+  const statY = Math.round((barH - statH) / 2);
 
   for (let i = 0; i < STAT_FILES.length; i += 1) {
     const statPath = path.join(root, 'public', STAT_FILES[i]);
     const resized = await sharp(statPath)
       .resize(statW, statH, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-      .tint(GOLD)
+      .tint({ r: 236, g: 234, b: 228 })
       .png()
       .toBuffer();
     composites.push({
@@ -43,22 +64,34 @@ async function buildStatRow(size) {
     });
   }
 
-  const labelSvg = Buffer.from(`<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
-    <text x="${size / 2}" y="${Math.round(size * 0.14)}" text-anchor="middle"
-      font-family="monospace" font-size="${Math.round(size * 0.055)}" letter-spacing="0.32em"
-      fill="#e8e4dc" opacity="0.55">REPUBLIC</text>
-    <text x="${size / 2}" y="${Math.round(size * 0.82)}" text-anchor="middle"
-      font-family="monospace" font-size="${Math.round(size * 0.21)}" font-weight="600"
-      letter-spacing="-0.04em" fill="#d4b454">2077</text>
-  </svg>`);
+  const badgeH = Math.round(size * 0.14);
+  const badgeSvg = Buffer.from(
+    `<svg width="${size}" height="${badgeH}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="${BRAND_HEX}" stop-opacity="0"/>
+          <stop offset="0.35" stop-color="${BRAND_HEX}" stop-opacity="0.88"/>
+          <stop offset="1" stop-color="${BRAND_HEX}" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+      <rect width="${size}" height="${badgeH}" fill="url(#fade)"/>
+      <text x="${size / 2}" y="${Math.round(badgeH * 0.72)}" text-anchor="middle"
+        font-family="monospace" font-size="${Math.round(badgeH * 0.48)}" font-weight="700"
+        fill="#d4b454">2077</text>
+    </svg>`,
+  );
+  composites.push({ input: badgeSvg, top: size - badgeH, left: 0 });
 
-  composites.push({ input: labelSvg, top: 0, left: 0 });
   return composites;
 }
 
-async function buildIconPipeline(size, { transparentBg = false } = {}) {
-  const composites = await buildStatRow(size);
-  const background = transparentBg ? { r: 0, g: 0, b: 0, alpha: 0 } : BRAND;
+async function buildIconPipeline(size, { transparentBg = false, sceneBg = false } = {}) {
+  const composites = await buildIconComposites(size);
+  const background = transparentBg
+    ? { r: 0, g: 0, b: 0, alpha: 0 }
+    : sceneBg
+      ? SCENE
+      : BRAND;
 
   return sharp({
     create: { width: size, height: size, channels: 4, background },
@@ -98,7 +131,7 @@ if (fs.existsSync(androidRes)) {
     'mipmap-xxxhdpi': 432,
   };
   for (const [folder, canvas] of Object.entries(fgSizes)) {
-    const inner = Math.round(canvas * 0.72);
+    const inner = Math.round(canvas * 0.78);
     const pad = Math.round((canvas - inner) / 2);
     const out = path.join(androidRes, folder, 'ic_launcher_foreground.png');
     fs.mkdirSync(path.dirname(out), { recursive: true });
