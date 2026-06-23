@@ -1,0 +1,203 @@
+/* Desktop promo — в духе vital-coach onboarding: тёмная оболочка + карточка */
+.desktop-landing {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212, 180, 84, 0.08), transparent),
+    var(--lapse-bar);
+  color: var(--lapse-bottom-text);
+  font-family: var(--font-mono);
+}
+
+.desktop-landing__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 28rem) minmax(0, 20rem);
+  gap: 3rem;
+  align-items: center;
+  width: min(56rem, 100%);
+}
+
+.desktop-landing__copy {
+  padding: 1.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(20, 18, 16, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.desktop-landing__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.desktop-landing__glyph {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font-size: 1.35rem;
+  background: linear-gradient(145deg, #8b6914, #d4b454 45%, #6b4f12);
+  color: #1a1612;
+  box-shadow: 0 8px 24px rgba(212, 180, 84, 0.22);
+}
+
+.desktop-landing__title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.desktop-landing__tagline {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  opacity: 0.65;
+}
+
+.desktop-landing__lead {
+  margin: 0 0 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.88;
+}
+
+.desktop-landing__features {
+  margin: 0 0 1.35rem;
+  padding-left: 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  opacity: 0.78;
+}
+
+.desktop-landing__features li + li {
+  margin-top: 0.35rem;
+}
+
+.desktop-landing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.desktop-landing__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.1rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.desktop-landing__btn--primary {
+  background: #d4b454;
+  color: #1a1612;
+  border-color: #d4b454;
+  font-weight: 500;
+}
+
+.desktop-landing__btn--primary:hover {
+  background: #e0c468;
+}
+
+.desktop-landing__btn--ghost {
+  background: transparent;
+  color: var(--lapse-bottom-text);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.desktop-landing__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.desktop-landing__note {
+  margin: 1rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  opacity: 0.55;
+}
+
+.desktop-landing__phone {
+  position: relative;
+  width: 100%;
+  max-width: 19rem;
+  margin: 0 auto;
+  aspect-ratio: 9 / 19;
+  border-radius: 2rem;
+  padding: 0.65rem;
+  background: linear-gradient(160deg, #3d3834, #1a1612);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.desktop-landing__phone-notch {
+  position: absolute;
+  top: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2;
+}
+
+.desktop-landing__phone-screen {
+  height: 100%;
+  border-radius: 1.45rem;
+  overflow: hidden;
+  background: var(--lapse-scene);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0.75rem 0.75rem;
+}
+
+.desktop-landing__preview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+  padding: 0.35rem 0.5rem 0;
+  background: var(--lapse-bar);
+  margin: -2rem -0.75rem 0.5rem;
+  padding-top: 1.75rem;
+}
+
+.desktop-landing__preview-stats span {
+  height: 2.2rem;
+  margin: 0 auto;
+  width: 1.1rem;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.desktop-landing__preview-text {
+  margin: 0 0 0.5rem;
+  padding: 0 0.25rem;
+  font-size: 0.52rem;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--lapse-text);
+}
+
+.desktop-landing__preview-portrait {
+  flex: 1;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 4px;
+}
+
+@media (max-width: 899px) {
+  .desktop-landing {
+    display: none;
+  }
+}

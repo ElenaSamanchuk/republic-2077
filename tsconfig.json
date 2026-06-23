@@ -1,0 +1,62 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path mapping */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "main.tsx",
+    "App.tsx",
+    "components/LapseGame.tsx",
+    "components/LapseGameCard.tsx",
+    "components/LapseGameEnd.tsx",
+    "components/LapseStatsBar.tsx",
+    "components/CharacterPortrait.tsx",
+    "components/SwipeCard.tsx",
+    "components/SoundSystem.tsx",
+    "components/LapseEffectStrip.tsx",
+    "components/LapseBanner.tsx",
+    "constants/campaignEvents.ts",
+    "components/Onboarding.tsx",
+    "components/DesktopLanding.tsx",
+    "lib/useDesktopLanding.ts",
+    "lib/registerServiceWorker.ts",
+    "lib/formatNarrative.ts",
+    "hooks/useCampaignGame.ts",
+    "constants/gameAssets.ts",
+    "constants/campaign.ts",
+    "constants/characters.ts",
+    "constants/coreStats.ts",
+    "constants/statIcons.tsx",
+    "vite-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "vite.config.ts",
+    "capacitor.config.ts"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
