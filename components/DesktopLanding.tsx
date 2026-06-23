@@ -1,7 +1,7 @@
 import { PORTRAIT_URLS } from '../constants/gameAssets';
 
 const APK_URL =
-  'https://github.com/ElenaSamanchuk/republic-2077/releases/download/apk-latest/republic-2077.apk';
+  'https://github.com/ElenaSamanchuk/republic-2077/releases/download/apk-latest/app-release.apk';
 
 interface DesktopLandingProps {
   onPlay: () => void;
